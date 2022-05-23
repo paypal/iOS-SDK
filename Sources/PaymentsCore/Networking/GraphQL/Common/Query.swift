@@ -8,15 +8,12 @@
 import Foundation
 
 protocol Query {
-    associatedtype T: Codable
-    
     var queryParams: Dictionary<String, String> { get }
     var queryName: String { get }
     var dataFieldsForResponse: String { get }
     
     func queryParameters() -> String
     func requestBody() -> String
-    func parse(data: Data) -> T
 }
 
 extension Query {
@@ -36,12 +33,4 @@ extension Query {
         """
     }
     
-    func parse(data: Data) -> T {
-        do {
-            let dataDecoded = try JSONDecoder().decode(type(of: <#T##T#>), from: data)
-            return dataDecoded
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
 }

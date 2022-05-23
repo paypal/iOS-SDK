@@ -14,7 +14,7 @@ public enum Environment {
         }
     }
     
-    var graphqlURL: URL {
+    public var graphqlURL: URL {
         switch self {
         case .sandbox:
             return URL(string: "https://sandbox.paypal.com/graphql")!
