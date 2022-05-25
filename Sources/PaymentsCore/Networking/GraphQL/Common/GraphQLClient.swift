@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import PaymentsCore
 
 class GraphQLClient {
     
-    var environment: Environment
-    var jsonEncoder: JSONEncoder = JSONEncoder()
+    private var environment: Environment
+    private var jsonEncoder: JSONEncoder = JSONEncoder()
     private var urlSession: URLSession
     
     public init(environment: Environment) {
@@ -25,8 +24,8 @@ class GraphQLClient {
             request.addValue(value, forHTTPHeaderField: key)
         }
         let (data, response) = try await urlSession.performRequest(with: request)
-        let correlationID = (response as? HTTPURLResponse)?.allHeaderFields["Paypal-Debug-Id"] as? String
-        guard let response = response as? HTTPURLResponse else {
+        _ = (response as? HTTPURLResponse)?.allHeaderFields["Paypal-Debug-Id"] as? String
+        guard response is HTTPURLResponse else {
             return GraphQLQueryResponse(data: nil, extensions: nil, errors: nil)
         }
         var decoded: T = try parse(data: data)

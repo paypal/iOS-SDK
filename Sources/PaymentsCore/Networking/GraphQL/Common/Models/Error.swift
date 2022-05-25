@@ -5,7 +5,7 @@
 //  Created by Andres Pelaez on 19/05/22.
 //
 
-struct Error: Codable {
+struct GraphQLError: Codable {
     let message: String
     let extensions: [Extension]?
 }
