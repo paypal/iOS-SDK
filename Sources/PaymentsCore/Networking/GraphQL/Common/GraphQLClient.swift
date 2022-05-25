@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PaymentsCore
 
 class GraphQLClient {
     
@@ -28,7 +29,7 @@ class GraphQLClient {
         guard response is HTTPURLResponse else {
             return GraphQLQueryResponse(data: nil, extensions: nil, errors: nil)
         }
-        var decoded: T = try parse(data: data)
+        let decoded: T = try parse(data: data)
         return GraphQLQueryResponse(data: decoded, extensions: nil, errors: nil)
     }
     
