@@ -1,21 +1,22 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Karthik Gangineni on 5/25/22.
 //
 
 import Foundation
+import PaymentsCore
 
-class EligibilityAPI{
+public class EligibilityAPI{
     private var graphQLClient: GraphQLClient
     private var coreConfig: CoreConfig
-    init(coreConfig: CoreConfig){
+    public init(coreConfig: CoreConfig){
         self.coreConfig = coreConfig
         graphQLClient = GraphQLClient(environment: coreConfig.environment)
     }
     
-    func checkEligibility() async throws -> APIResult<Eligibility>{
+    public func checkEligibility() async throws -> APIResult<Eligibility>{
         let fundingEligibilityQuery = FundingEligibilityQuery(clientId: coreConfig.clientID, fundingEligibilityIntent: FundingEligibilityIntent.CAPTURE, currencyCode: SupportedCountryCurrencyType.USD, enableFunding: [SupportedPaymentMethodsType.VENMO])
         let response: GraphQLQueryResponse<FundingEligibilityResponse> = try await graphQLClient.executeQuery(query: fundingEligibilityQuery)
         if(response.data==nil) {

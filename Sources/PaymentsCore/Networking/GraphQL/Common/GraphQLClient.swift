@@ -38,10 +38,9 @@ class GraphQLClient {
     }
     
     func createURLRequest(requestBody: String) throws -> URLRequest {
-        print(requestBody)
         var urlRequest = URLRequest(url: environment.graphqlURL)
         urlRequest.httpMethod = HTTPMethod.post.rawValue
-        urlRequest.httpBody = try jsonEncoder.encode(requestBody)
+        urlRequest.httpBody = requestBody.data(using: .utf16)
         return urlRequest
     }
     
@@ -53,4 +52,5 @@ class GraphQLClient {
         headers["Origin"] = environment.graphqlURL.absoluteString
         return headers
     }
+    
 }

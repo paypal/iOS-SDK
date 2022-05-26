@@ -28,8 +28,8 @@ extension Query {
     
     func requestBody() -> String {
         return """
-            query { \(queryName) ( \(queryParameters()) )
-            \(dataFieldsForResponse) }
+            "query": "query { \(queryName) ( \(queryParameters()) )
+            \(dataFieldsForResponse) }"
         """
     }
     

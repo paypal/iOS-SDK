@@ -6,17 +6,17 @@
 //
 
 class FundingEligibilityQuery: Query {
-    
     typealias T = FundingEligibilityResponse
     
     var queryParams: Dictionary<String, String> {
         get {
             var queryParams = Dictionary<String, String>()
-            queryParams[PARAM_CLIENT_ID] = clientId
+            queryParams[PARAM_CLIENT_ID] = """
+                        "\(clientId)"
+            """
             queryParams[PARAM_INTENT] = "\(fundingEligibilityIntent)"
             queryParams[PARAM_CURRENCY] = "\(currencyCode)"
             queryParams[PARAM_ENABLE_FUNDING] = "\(enableFunding)"
-            
             return queryParams
         }
     }

@@ -60,6 +60,11 @@ struct SwiftUICardDemo: View {
                 .disabled(!baseViewModel.isCardFormValid(cardNumber: cardNumberText, expirationDate: expirationDateText, cvv: cvvText))
             }
             .padding(.horizontal, 16)
+            Button("Eligibility ") {
+                Task {
+                    await baseViewModel.testEligibility()
+                }
+            }
         }
     }
 }
