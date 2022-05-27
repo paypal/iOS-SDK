@@ -1,4 +1,5 @@
 import UIKit
+import PaymentsCore
 
 class CardDemoViewController: FeatureBaseViewController, UITextFieldDelegate {
 
@@ -49,6 +50,15 @@ class CardDemoViewController: FeatureBaseViewController, UITextFieldDelegate {
         checkoutButton.isEnabled = false
         return checkoutButton
     }()
+    
+    lazy var eligibilityButton: CustomButton = {
+        let checkoutButton = CustomButton(title: "eligibility")
+        checkoutButton.addTarget(self, action: #selector(didTapEligibilityButton), for: .touchUpInside)
+        checkoutButton.layer.cornerRadius = 8
+        checkoutButton.backgroundColor = .systemBlue
+        checkoutButton.tintColor = .white
+        return checkoutButton
+    }()
 
     private let cardFormatter = CardFormatter()
 
@@ -73,6 +83,7 @@ class CardDemoViewController: FeatureBaseViewController, UITextFieldDelegate {
         cardFormStackView.addArrangedSubview(cardNumberTextField)
         cardFormStackView.addArrangedSubview(expirationCVVStackView)
         cardFormStackView.addArrangedSubview(checkoutButton)
+        cardFormStackView.addArrangedSubview(eligibilityButton)
 
         expirationCVVStackView.addArrangedSubview(expirationTextField)
         expirationCVVStackView.addArrangedSubview(cvvTextField)
@@ -124,6 +135,12 @@ class CardDemoViewController: FeatureBaseViewController, UITextFieldDelegate {
         Task {
             await baseViewModel.checkoutWithCard(card, orderID: orderID)
             self.checkoutButton.stopAnimating()
+        }
+    }
+    
+    @objc func didTapEligibilityButton() {
+        Task {
+            await baseViewModel.testEligibility()
         }
     }
 

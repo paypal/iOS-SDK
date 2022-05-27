@@ -16,7 +16,7 @@ class FundingEligibilityQuery: Query {
             """
             queryParams[PARAM_INTENT] = "\(fundingEligibilityIntent)"
             queryParams[PARAM_CURRENCY] = "\(currencyCode)"
-            queryParams[PARAM_ENABLE_FUNDING] = "\(enableFunding)"
+            queryParams[PARAM_ENABLE_FUNDING] = "[VENMO]"
             return queryParams
         }
     }

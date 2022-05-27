@@ -24,12 +24,15 @@ class GraphQLClient {
         headers().forEach { key, value in
             request.addValue(value, forHTTPHeaderField: key)
         }
+        print("request: ", request)
         let (data, response) = try await urlSession.performRequest(with: request)
         _ = (response as? HTTPURLResponse)?.allHeaderFields["Paypal-Debug-Id"] as? String
+        print(response)
         guard response is HTTPURLResponse else {
             return GraphQLQueryResponse(data: nil, extensions: nil, errors: nil)
         }
         let decoded: T = try parse(data: data)
+        print("response: ", String(data: data, encoding: .utf8))
         return GraphQLQueryResponse(data: decoded, extensions: nil, errors: nil)
     }
     
@@ -40,7 +43,8 @@ class GraphQLClient {
     func createURLRequest(requestBody: String) throws -> URLRequest {
         var urlRequest = URLRequest(url: environment.graphqlURL)
         urlRequest.httpMethod = HTTPMethod.post.rawValue
-        urlRequest.httpBody = requestBody.data(using: .utf16)
+        urlRequest.httpBody = requestBody.data(using: .utf8)
+        print("request: ", requestBody)
         return urlRequest
     }
     
@@ -49,8 +53,12 @@ class GraphQLClient {
         headers["Content-type"] = "application/json"
         headers["Accept"] = "application/json"
         headers["x-app-name"] = "nativecheckout"
-        headers["Origin"] = environment.graphqlURL.absoluteString
+        headers["Origin"] = "https://www.sandbox.paypal.com"
         return headers
     }
+    
+    let body = """
+{"query":"query {\n   fundingEligibility(clientId: "AWuNAP9NxbCWU6BqlenVLTziw7cSzdbIm7Tkla0lLSI-Jupex0LW7noBnRParW4_t_pBVzv92HATEDw3"\n    intent: CAPTURE \n    currency: USD \n    enableFunding: [VENMO]) \n   {\n        venmo{\n            eligible\n            reasons\n        }\n        card{\n              eligible\n        }\n        paypal{\n              eligible\n              reasons\n        }\n        paylater{\n              eligible\n              reasons\n        }\n        credit{\n            eligible\n            reasons\n        }\n        \n   }\n}","variables":{}}
+"""
     
 }
