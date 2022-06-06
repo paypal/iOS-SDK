@@ -7,5 +7,4 @@
 
 struct Extension: Codable {
     let correlationId: String
-    let code: String?
 }

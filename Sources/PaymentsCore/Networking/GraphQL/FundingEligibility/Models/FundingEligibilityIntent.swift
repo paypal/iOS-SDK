@@ -5,7 +5,7 @@
 //  Created by Andres Pelaez on 19/05/22.
 //
 
-enum FundingEligibilityIntent {
+enum FundingEligibilityIntent: String {
     case SALE
     case CAPTURE
     case AUTHORIZE
