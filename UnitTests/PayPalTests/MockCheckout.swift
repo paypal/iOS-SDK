@@ -10,7 +10,7 @@ class MockCheckout: CheckoutProtocol {
     static var onCancel: CancelCallback?
     static var onError: ErrorCallback?
 
-    static func set(config: CoreConfig, returnURL: String) { }
+    static func set(config: CoreConfig, clientId: String, returnURL: String) { }
 
     static func start(
         presentingViewController: UIViewController?,
